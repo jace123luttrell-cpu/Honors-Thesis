@@ -47,7 +47,7 @@ filtered_df['delta_z'] = filtered_df['z_mgii'] - filtered_df['z_agnqso']
 # Drop NaNs
 filtered_df = filtered_df.dropna(subset=['delta_z'])
 
-#print(filtered_df.head())
+
 
 # Compute error on delta z
 filtered_df['delta_z_err_low'] = np.sqrt(filtered_df['zerr']**2 + filtered_df['Z_MGII_ERR_LOW']**2)
