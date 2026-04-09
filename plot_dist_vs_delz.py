@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 dist_df = pd.read_csv("filteredmatches_100_plus_err.csv")
 dist_df['mgii_targetid'] = dist_df['mgii_targetid'].astype(str)
 
-#print(dist_df.columns)
+
 
 # Open FITS file
 fits_filename = "MgII-Absorbers-DR1.fits"
