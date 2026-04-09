@@ -11,5 +11,5 @@ result = qc.query(sql=query, fmt='pandas')
 #print(len(result))
 print(result)
 
-#result.to_csv("filtered_agnqso.csv", index=False)
-#print("Results saved to filtered_agnqso.csv")
+result.to_csv("filtered_agnqso.csv", index=False)
+print("Results saved to filtered_agnqso.csv")
