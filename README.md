@@ -11,3 +11,5 @@ The scripts that plot EW vs Mass and EW vs SFR use the complete list of galaxy-a
 clean_2.py implements cuts on the data that finds groups of multiple galaxies that match to one absorption system and then removes all but the closest and it includes the error on redshift for the galaxies. 
 
 main_sequence_plot.py has three parts, the first part uses another value added catalog of the physical properties of the galaxies in the DESI main survey to plot the logarithm of the star formation rate of the galaxy versus the logarithm of the stellar mass of the galaxy. This creates what's called the main sequence plot that we care about. The other two parts are two theoretical main sequence lines for galaxies at the redshift we look at in the paper. These come from Speagle et al from 2014 and Popesso et al from 2023.
+
+The catalogs I make mention of come from the DESI website and can be found at this link: https://data.desi.lbl.gov/public/dr1/
