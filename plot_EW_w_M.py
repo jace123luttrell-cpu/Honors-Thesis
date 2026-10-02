@@ -49,7 +49,7 @@ filtered_df = merged_df[
 typical_ew_err_low = filtered_df['EW_2803_ERR_LOW'].mean()
 typical_ew_err_high = filtered_df['EW_2803_ERR_HIGH'].mean()
 
-# Typical sfr error
+# Typical m error
 typical_m_err = filtered_df['LOGM_ERR'].mean()
 
 # Pearson correlation test
