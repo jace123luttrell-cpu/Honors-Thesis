@@ -53,23 +53,20 @@ typical_ew_err_high = filtered_df['EW_2803_ERR_HIGH'].mean()
 typical_m_err = filtered_df['LOGM_ERR'].mean()
 
 # Pearson correlation test
-#r_value, p_value = pearsonr(
-#    filtered_df['LOGM'],
-#    filtered_df['EW_2803']
-#)
-
-#print(f"Pearson r = {r_value:.3f}")
-#print(f"p-value = {p_value:.3e}")
+r_value, p_value = pearsonr(
+    filtered_df['LOGM'],
+    filtered_df['EW_2803']
+)
+print(f"Pearson r = {r_value:.3f}")
+print(f"p-value = {p_value:.3e}")
 
 # Two-sample K-S Test
+near = filtered_df[filtered_df['comoving_transverse_distance'] < 40]['EW_2803']
+far  = filtered_df[filtered_df['comoving_transverse_distance'] >= 40]['EW_2803']
 
-#near = filtered_df[filtered_df['comoving_transverse_distance'] < 40]['EW_2803']
-#far  = filtered_df[filtered_df['comoving_transverse_distance'] >= 40]['EW_2803']
-
-#ks_stat, ks_p = ks_2samp(near, far)
-
-#print(f"KS statistic = {ks_stat:.3f}")
-#print(f"KS p-value = {ks_p:.3e}")
+ks_stat, ks_p = ks_2samp(near, far)
+print(f"KS statistic = {ks_stat:.3f}")
+print(f"KS p-value = {ks_p:.3e}")
 
 y_errors = np.array([filtered_df['EW_2803_ERR_LOW'], filtered_df['EW_2803_ERR_HIGH']])
 
