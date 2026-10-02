@@ -47,34 +47,6 @@ filtered_df = merged_df[
     (merged_df['comoving_transverse_distance'] <= dist_max)
 ]
 
-# Check initial sizes
-print(f"Rows in CSV: {len(sfr_df)}")
-print(f"Rows in FITS: {len(ew_df)}")
-
-# Check ID formatting samples
-print(f"Sample CSV ID: {repr(sfr_df['mgii_targetid'].iloc[0])}")
-print(f"Sample FITS ID: {repr(ew_df['mgii_targetid'].iloc[0])}")
-
-# 1. Test the Merge
-merged_df = pd.merge(sfr_df, ew_df, on='mgii_targetid', how='inner') # Switch to inner to see matches
-print(f"Rows after INNER merge: {len(merged_df)}")
-
-if len(merged_df) == 0:
-    print("❌ ERROR: Merge failed completely. The IDs do not match exactly. Check for whitespace differences.")
-    # Try stripping whitespace if they look like strings:
-    # ew_df['mgii_targetid'] = ew_df['mgii_targetid'].str.strip()
-
-# 2. Test Dropna
-dropped_df = merged_df.dropna(subset=['EW_2803', 'LOGSFR'])
-print(f"Rows after dropna: {len(dropped_df)}")
-
-# 3. Test Distance Filter
-final_filtered = dropped_df[
-    (dropped_df['comoving_transverse_distance'] >= 0) & 
-    (dropped_df['comoving_transverse_distance'] <= 40)
-]
-print(f"Rows after distance filter (<40): {len(final_filtered)}")
-
 # Typical ew error
 typical_ew_err_low = filtered_df['EW_2803_ERR_LOW'].mean()
 typical_ew_err_high = filtered_df['EW_2803_ERR_HIGH'].mean()
@@ -83,23 +55,20 @@ typical_ew_err_high = filtered_df['EW_2803_ERR_HIGH'].mean()
 typical_sfr_err = filtered_df['LOGSFR_ERR'].mean()
 
 # Pearson correlation test
-#r_value, p_value = pearsonr(
-#    filtered_df['LOGSFR'],
-#    filtered_df['EW_2803']
-#)
-
-#print(f"Pearson r = {r_value:.3f}")
-#print(f"p-value = {p_value:.3e}")
+r_value, p_value = pearsonr(
+    filtered_df['LOGSFR'],
+    filtered_df['EW_2803']
+)
+print(f"Pearson r = {r_value:.3f}")
+print(f"p-value = {p_value:.3e}")
 
 # Two-sample K-S Test
+near = filtered_df[filtered_df['comoving_transverse_distance'] < 40]['EW_2803']
+far  = filtered_df[filtered_df['comoving_transverse_distance'] >= 40]['EW_2803']
 
-#near = filtered_df[filtered_df['comoving_transverse_distance'] < 40]['EW_2803']
-#far  = filtered_df[filtered_df['comoving_transverse_distance'] >= 40]['EW_2803']
-
-#ks_stat, ks_p = ks_2samp(near, far)
-
-#print(f"KS statistic = {ks_stat:.3f}")
-#print(f"KS p-value = {ks_p:.3e}")
+ks_stat, ks_p = ks_2samp(near, far)
+print(f"KS statistic = {ks_stat:.3f}")
+print(f"KS p-value = {ks_p:.3e}")
 
 y_errors = np.array([filtered_df['EW_2803_ERR_LOW'], filtered_df['EW_2803_ERR_HIGH']])
 
